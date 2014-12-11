@@ -18,7 +18,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         Intent intent = getIntent();
-        String username = intent.getStringExtra(SignInActivity.EXTRA_MESSAGE);
+        String username = intent.getStringExtra(SignInActivity.EXTRAS_KEY_SIGN_IN_MESSAGE);
 
         Resources res = getResources();
         String text = String.format(res.getString(R.string.welcome_message), username);

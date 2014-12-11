@@ -4,4 +4,4 @@ source "http://rubygems.org"
 # gemspec
 
 gem "rake"
-gem "calabash-android", "0.5"
+gem "calabash-android", "0.5.5"

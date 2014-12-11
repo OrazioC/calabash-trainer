@@ -13,7 +13,7 @@ import android.widget.Toast;
  */
 public class SignInActivity extends Activity {
 
-    public final static String EXTRA_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
+    public final static String EXTRAS_KEY_SIGN_IN_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class SignInActivity extends Activity {
         if (username.equalsIgnoreCase("bbm") && passwordText.equalsIgnoreCase("pass")) {
 
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.putExtra(EXTRA_MESSAGE, username);
+            intent.putExtra(EXTRAS_KEY_SIGN_IN_MESSAGE, username);
             startActivity(intent);
         } else {
 
