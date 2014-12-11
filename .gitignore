@@ -5,7 +5,5 @@
 .DS_Store
 /build
 .idea/
-app/test_servers
-app/screenshots
 app/.irb-history
 app/build
