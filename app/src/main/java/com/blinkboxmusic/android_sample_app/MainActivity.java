@@ -6,11 +6,17 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
 
+
+    public final static String EXTRAS_KEY_ITEM_NAME_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +30,26 @@ public class MainActivity extends ActionBarActivity {
         String text = String.format(res.getString(R.string.welcome_message), username);
         TextView welcome_message = (TextView)findViewById(R.id.welcome_label);
         welcome_message.setText(text);
+
+        // Bind the Adapter with the ListView
+        // Instantiate the Adapter obj
+        final MainListViewAdapter mainListViewAdapter = new MainListViewAdapter(getApplicationContext());
+        // Take the reference of the ListView
+        ListView mainListView = (ListView)findViewById(R.id.main_list_view);
+        // Bind the Adapter with ListView
+        mainListView.setAdapter(mainListViewAdapter);
+
+        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MainListItem item = mainListViewAdapter.getItem(position);
+
+                Intent intent = new Intent(getApplicationContext(), ShowItemActivity.class);
+                intent.putExtra(EXTRAS_KEY_ITEM_NAME_MESSAGE, item.getName());
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
