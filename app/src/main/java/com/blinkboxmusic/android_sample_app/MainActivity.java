@@ -1,7 +1,10 @@
 package com.blinkboxmusic.android_sample_app;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,18 +34,51 @@ public class MainActivity extends ActionBarActivity {
         TextView welcome_message = (TextView)findViewById(R.id.welcome_label);
         welcome_message.setText(text);
 
+
+        /**
+         *
+         */
+//        ContentValues values = new ContentValues();
+//
+//        values.put(SpacecraftContentProvider.NAME, "Death Star");
+//        values.put(SpacecraftContentProvider.AFFILIATION, MainListViewAdapter.Faction.EMPIRE.toString());
+//        Uri uri = getContentResolver().insert(SpacecraftContentProvider.CONTENT_URI, values);
+//
+//        Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_LONG).show();
+
+        // get a cursor from the ContentProvider
+        // iterate using the cursor to populate the list
+        // (in the future use cursor adapter
+
+        String URL = "content://bbm/spacecraft";
+        Uri spacecrafts = Uri.parse(URL);
+        Cursor cursor = getContentResolver().query(spacecrafts, null, null, null, "name");
+//        if (c.moveToFirst()) {
+//            do{
+//                Toast.makeText(this,
+//                        c.getString(c.getColumnIndex(SpacecraftContentProvider._ID)) +
+//                                ", " +  c.getString(c.getColumnIndex( SpacecraftContentProvider.NAME)) +
+//                                ", " + c.getString(c.getColumnIndex( SpacecraftContentProvider.AFFILIATION)),
+//                        Toast.LENGTH_SHORT).show();
+//            } while (c.moveToNext());
+//        }
+
+        startManagingCursor(cursor);
+
+        final MainListCursorAdapter cursorAdapter = new MainListCursorAdapter(this,cursor,false);
+
         // Bind the Adapter with the ListView
         // Instantiate the Adapter obj
-        final MainListViewAdapter mainListViewAdapter = new MainListViewAdapter(getApplicationContext());
+        //final MainListViewAdapter mainListViewAdapter = new MainListViewAdapter(getApplicationContext());
         // Take the reference of the ListView
         ListView mainListView = (ListView)findViewById(R.id.main_list_view);
         // Bind the Adapter with ListView
-        mainListView.setAdapter(mainListViewAdapter);
+        mainListView.setAdapter(cursorAdapter);
 
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MainListItem item = mainListViewAdapter.getItem(position);
+                MainListItem item = (MainListItem) cursorAdapter.getItem(position);
 
                 Intent intent = new Intent(getApplicationContext(), ShowItemActivity.class);
                 intent.putExtra(EXTRAS_KEY_ITEM_NAME_MESSAGE, item.getName());

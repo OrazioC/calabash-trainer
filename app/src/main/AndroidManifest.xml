@@ -27,6 +27,13 @@
             android:name="com.blinkboxmusic.android_sample_app.ShowItemActivity"
             android:label="@string/title_activity_show_item" >
         </activity>
+
+        <provider
+            android:name=".SpacecraftContentProvider"
+            android:authorities="bbm"
+            android:enabled="true"
+            android:exported="true" >
+        </provider>
     </application>
 
 </manifest>
