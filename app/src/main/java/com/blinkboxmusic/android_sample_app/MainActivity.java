@@ -12,6 +12,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -33,7 +36,7 @@ public class MainActivity extends ActionBarActivity {
 
         // Bind the Adapter with the ListView
         // Instantiate the Adapter obj
-        final MainListViewAdapter mainListViewAdapter = new MainListViewAdapter(getApplicationContext());
+        final MainListViewAdapter mainListViewAdapter = new MainListViewAdapter(getApplicationContext(), getDataForListView());
         // Take the reference of the ListView
         ListView mainListView = (ListView)findViewById(R.id.main_list_view);
         // Bind the Adapter with ListView
@@ -72,5 +75,32 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private List<MainListItem> getDataForListView() {
+        List<MainListItem> mainList = new ArrayList<MainListItem>();
+
+        MainListItem item1 = new MainListItem();
+        item1.setName("Death Star");
+        item1.setAffiliation(Contants.Faction.EMPIRE.toString());
+
+        MainListItem item2 = new MainListItem();
+        item2.setName("Mon Calamari cruiser");
+        item2.setAffiliation(Contants.Faction.REBELLION.toString());
+
+        MainListItem item3 = new MainListItem();
+        item3.setName("Tantive IV");
+        item3.setAffiliation(Contants.Faction.REBELLION.toString());
+
+        MainListItem item4 = new MainListItem();
+        item4.setName("Star Destroyer");
+        item4.setAffiliation(Contants.Faction.EMPIRE.toString());
+
+        mainList.add(item1);
+        mainList.add(item2);
+        mainList.add(item3);
+        mainList.add(item4);
+
+        return mainList;
     }
 }

@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,49 +15,24 @@ import java.util.List;
  */
 public class MainListViewAdapter extends BaseAdapter{
 
-    List<MainListItem> mainList = getDataForListView();
-    Context context;
-    enum Faction {EMPIRE, REBELLION};
+    private Context mContext;
+    private List<MainListItem> mMainList;
 
-    public MainListViewAdapter(Context pContext){
-        context = pContext;
-    }
 
-    private List<MainListItem> getDataForListView() {
-        mainList = new ArrayList<MainListItem>();
+    public MainListViewAdapter(final Context context, final List<MainListItem> mainList){
 
-        MainListItem item1 = new MainListItem();
-        item1.setName("Death Star");
-        item1.setAffiliation(Faction.EMPIRE.toString());
-
-        MainListItem item2 = new MainListItem();
-        item2.setName("Mon Calamari cruiser");
-        item2.setAffiliation(Faction.REBELLION.toString());
-
-        MainListItem item3 = new MainListItem();
-        item3.setName("Tantive IV");
-        item3.setAffiliation(Faction.REBELLION.toString());
-
-        MainListItem item4 = new MainListItem();
-        item4.setName("Star Destroyer");
-        item4.setAffiliation(Faction.EMPIRE.toString());
-
-        mainList.add(item1);
-        mainList.add(item2);
-        mainList.add(item3);
-        mainList.add(item4);
-
-        return mainList;
+        this.mContext = context;
+        this.mMainList = mainList;
     }
 
     @Override
     public int getCount() {
-        return mainList.size();
+        return mMainList.size();
     }
 
     @Override
     public MainListItem getItem(int position) {
-        return mainList.get(position);
+        return mMainList.get(position);
     }
 
     @Override
@@ -74,7 +48,7 @@ public class MainListViewAdapter extends BaseAdapter{
         // ListView recycles the views
         if (convertView==null) {
             // inflate the layout
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.main_list_item, parent, false);
 
             // well set up the ViewHolder
@@ -92,11 +66,11 @@ public class MainListViewAdapter extends BaseAdapter{
 
         }
 
-        MainListItem mainListItem = mainList.get(position);
+        MainListItem mainListItem = mMainList.get(position);
 
         if (mainListItem != null) {
 
-            if (mainListItem.getAffiliation().equals(Faction.REBELLION.toString())) {
+            if (mainListItem.getAffiliation().equals(Contants.Faction.REBELLION.toString())) {
                 viewHolderMainListItem.imageViewItem.setImageResource(R.drawable.rebellion);
             } else {
                 viewHolderMainListItem.imageViewItem.setImageResource(R.drawable.empire);
