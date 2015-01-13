@@ -69,27 +69,50 @@ public class MainListViewAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        ViewHolderMainListItem viewHolderMainListItem;
+
         // ListView recycles the views
         if (convertView==null) {
+            // inflate the layout
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.main_list_item, parent, false);
-        }
 
-        TextView shipNameView = (TextView)convertView.findViewById(R.id.item_name);
-        ImageView affiliationLogoImageView = (ImageView)convertView.findViewById(R.id.item_affiliation_logo);
+            // well set up the ViewHolder
+            viewHolderMainListItem = new ViewHolderMainListItem();
+            viewHolderMainListItem.textViewItem = (TextView) convertView.findViewById(R.id.item_name);
+            viewHolderMainListItem.imageViewItem = (ImageView) convertView.findViewById(R.id.item_affiliation_logo);
 
-        String shipName = mainList.get(position).getName();
-        String affiliation = mainList.get(position).getAffiliation();
+            // store the holder with the view.
+            convertView.setTag(viewHolderMainListItem);
 
-        if (affiliation.equals(Faction.REBELLION.toString())) {
-            affiliationLogoImageView.setImageResource(R.drawable.rebellion);
         } else {
-            affiliationLogoImageView.setImageResource(R.drawable.empire);
+            // we've just avoided calling findViewById() on resource everytime
+            // just use the viewHolder
+            viewHolderMainListItem = (ViewHolderMainListItem) convertView.getTag();
+
         }
 
+        MainListItem mainListItem = mainList.get(position);
 
-        shipNameView.setText(shipName);
+        if (mainListItem != null) {
+
+            if (mainListItem.getAffiliation().equals(Faction.REBELLION.toString())) {
+                viewHolderMainListItem.imageViewItem.setImageResource(R.drawable.rebellion);
+            } else {
+                viewHolderMainListItem.imageViewItem.setImageResource(R.drawable.empire);
+            }
+
+            // get the TextView from the ViewHolder and then set the text (item name) and tag (item ID) values
+            viewHolderMainListItem.textViewItem.setText(mainListItem.getName());
+
+        }
 
         return convertView;
     }
+
+    static class ViewHolderMainListItem {
+        TextView textViewItem;
+        ImageView imageViewItem;
+    }
+
 }
