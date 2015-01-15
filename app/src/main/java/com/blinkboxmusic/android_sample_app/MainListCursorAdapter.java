@@ -14,32 +14,54 @@ import android.widget.TextView;
  */
 public class MainListCursorAdapter extends CursorAdapter {
 
-    enum Faction {EMPIRE, REBELLION};
-
-    public MainListCursorAdapter(Context context, Cursor c, boolean autoRequery) {
+    public MainListCursorAdapter(final Context context, final Cursor c, final boolean autoRequery) {
         super(context, c, autoRequery);
     }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+    public View newView(final Context context, final Cursor cursor, final ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-        return inflater.inflate(R.layout.main_list_item, parent, false);
+
+        View view = inflater.inflate(R.layout.main_list_item, parent, false);
+
+        // Set up the ViewHolder
+        // CursorAdapter is not going to call the newView each time it needs a new row.
+        // If it already has a View it will reuse it and call the bindView method.
+        // But we can still increase the performances avoiding calling the findViewById on each bindView invocation
+        ViewHolderMainListItem viewHolderMainListItem = new ViewHolderMainListItem();
+        viewHolderMainListItem.textViewItem = (TextView) view.findViewById(R.id.item_name);
+        viewHolderMainListItem.imageViewItem = (ImageView) view.findViewById(R.id.item_affiliation_logo);
+
+        view.setTag(viewHolderMainListItem);
+
+        return view;
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-        TextView shipNameView = (TextView)view.findViewById(R.id.item_name);
-        ImageView affiliationLogoImageView = (ImageView)view.findViewById(R.id.item_affiliation_logo);
+    public void bindView(final View view, final Context context, final Cursor cursor) {
 
-        String affiliation = cursor.getString(2);
+        ViewHolderMainListItem viewHolderMainListItem = (ViewHolderMainListItem)view.getTag();
 
-        if (affiliation.equals(Faction.REBELLION.toString())) {
-            affiliationLogoImageView.setImageResource(R.drawable.rebellion);
+        // Getting the indexes for the columns
+        int nameColumnIndex = cursor.getColumnIndexOrThrow(SpacecraftContentProvider.NAME);
+        int affiliationColumnIndex = cursor.getColumnIndexOrThrow(SpacecraftContentProvider.AFFILIATION);
+
+        // Getting the values (x row x column)
+        String name = cursor.getString(nameColumnIndex);
+        String affiliation = cursor.getString(affiliationColumnIndex);
+
+        // Setting the values in the view using the view holder
+        viewHolderMainListItem.textViewItem.setText(name);
+
+        if (affiliation.equals(Constants.Faction.REBELLION.toString())) {
+            viewHolderMainListItem.imageViewItem.setImageResource(R.drawable.rebellion);
         } else {
-            affiliationLogoImageView.setImageResource(R.drawable.empire);
+            viewHolderMainListItem.imageViewItem.setImageResource(R.drawable.empire);
         }
+    }
 
-        shipNameView.setText(cursor.getString(1));
-
+    static class ViewHolderMainListItem {
+        TextView textViewItem;
+        ImageView imageViewItem;
     }
 }

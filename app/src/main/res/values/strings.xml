@@ -11,6 +11,6 @@
     <string name="welcome_message">Welcome %1$s</string>
     <string name="title_activity_main">Main Page</string>
     <string name="title_activity_show_item">%1$s</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="placeholder">placeholder</string>
 
 </resources>

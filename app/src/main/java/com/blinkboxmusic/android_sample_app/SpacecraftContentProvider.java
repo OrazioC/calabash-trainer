@@ -74,25 +74,17 @@ public class SpacecraftContentProvider extends ContentProvider {
 
             db.execSQL(CREATE_DB_TABLE);
 
-
-            //TODO Parse the spacecrafts xml file
-            XmlPullParserFactory pullParserFactory;
             List<Spacecraft> spacecrafts = new ArrayList<Spacecraft>();
+            XmlPullSpacecraftParserHandler parserHandler = new XmlPullSpacecraftParserHandler();
 
             try {
-                pullParserFactory = XmlPullParserFactory.newInstance();
-                XmlPullParser parser = pullParserFactory.newPullParser();
+                InputStream inputStream = this.context.getAssets().open("spacecraft.xml");
 
-                InputStream in_s = this.context.getAssets().open("spacecraft.xml");
-
-                parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-                parser.setInput(in_s, null);
-
-                parseXML(parser, spacecrafts);
+                spacecrafts = parserHandler.parseXML(inputStream);
             } catch (XmlPullParserException e) {
-                e.printStackTrace();
+                Log.d("PARSER", e.getStackTrace().toString());
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.d("PARSER", e.getStackTrace().toString());
             }
 
             //Read the info from a file
@@ -108,49 +100,7 @@ public class SpacecraftContentProvider extends ContentProvider {
             onCreate(db);
         }
 
-        private void parseXML(final XmlPullParser parser, final List<Spacecraft> spacecrafts) throws XmlPullParserException,IOException
-        {
 
-            int eventType = parser.getEventType();
-
-            Spacecraft currentSpacecraft = null;
-
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                switch (eventType) {
-                case XmlPullParser.START_DOCUMENT:
-                    Log.d("PARSER", "START_DOCUMENT " + parser.getName());
-                    break;
-                case XmlPullParser.START_TAG:
-                    String tagName = parser.getName();
-
-                    if (tagName.equals("spacecraft")) {
-                        currentSpacecraft = new Spacecraft();
-                    } else if (tagName.equals("name")) {
-                        currentSpacecraft.setName(parser.nextText());
-                    } else if (tagName.equals("affiliation")) {
-                        currentSpacecraft.setAffiliation(parser.nextText());
-                    }
-
-
-                    Log.d("PARSER", "START_TAG " + parser.getName());
-                    break;
-                case XmlPullParser.TEXT:
-                    Log.d("PARSER", "TEXT " + parser.getText());
-                    break;
-                case XmlPullParser.END_TAG:
-                    String endTagName = parser.getName();
-                    if (endTagName.equals("spacecraft")) {
-                        spacecrafts.add(currentSpacecraft);
-                    }
-                    Log.d("PARSER", "END_TAG " + parser.getName());
-                    break;
-                case XmlPullParser.END_DOCUMENT :
-                    Log.d("PARSER", "END_DOCUMENT " + parser.getName());
-                    break;
-                }
-                eventType = parser.next();
-            }
-        }
 
     }
 

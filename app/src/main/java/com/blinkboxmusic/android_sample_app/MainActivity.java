@@ -6,12 +6,16 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -51,16 +55,8 @@ public class MainActivity extends ActionBarActivity {
         String URL = "content://bbm/spacecraft";
         Uri spacecrafts = Uri.parse(URL);
         Cursor cursor = getContentResolver().query(spacecrafts, null, null, null, "name");
-//        if (c.moveToFirst()) {
-//            do{
-//                Toast.makeText(this,
-//                        c.getString(c.getColumnIndex(SpacecraftContentProvider._ID)) +
-//                                ", " +  c.getString(c.getColumnIndex( SpacecraftContentProvider.NAME)) +
-//                                ", " + c.getString(c.getColumnIndex( SpacecraftContentProvider.AFFILIATION)),
-//                        Toast.LENGTH_SHORT).show();
-//            } while (c.moveToNext());
-//        }
 
+        Log.d("CURSOR", String.valueOf(cursor.getCount()));
         startManagingCursor(cursor);
 
         final MainListCursorAdapter cursorAdapter = new MainListCursorAdapter(this,cursor,false);
@@ -73,13 +69,18 @@ public class MainActivity extends ActionBarActivity {
         // Bind the Adapter with ListView
         mainListView.setAdapter(cursorAdapter);
 
+
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Spacecraft item = (Spacecraft) cursorAdapter.getItem(position);
+
+                Cursor cursor = ((MainListCursorAdapter) parent.getAdapter()).getCursor();
+                cursor.moveToPosition(position);
+
+                String itemName = cursor.getString(cursor.getColumnIndex(SpacecraftContentProvider.NAME));
 
                 Intent intent = new Intent(getApplicationContext(), ShowItemActivity.class);
-                intent.putExtra(EXTRAS_KEY_ITEM_NAME_MESSAGE, item.getName());
+                intent.putExtra(EXTRAS_KEY_ITEM_NAME_MESSAGE, itemName);
                 startActivity(intent);
             }
         });
