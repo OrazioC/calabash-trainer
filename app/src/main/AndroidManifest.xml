@@ -23,6 +23,10 @@
             android:name="com.blinkboxmusic.android_sample_app.MainActivity"
             android:label="@string/title_activity_main" >
         </activity>
+        <activity
+            android:name="com.blinkboxmusic.android_sample_app.ShowItemActivity"
+            android:label="@string/title_activity_show_item" >
+        </activity>
     </application>
 
 </manifest>

@@ -21,3 +21,10 @@ end
 Then(/^I should see a "(.*?)" message$/) do |message|
   wait_for_text(message)
 end
+
+
+Given(/^I have successfully signed in$/) do
+  step %|I enter "bbm" into the Username field|
+  step %|I enter "pass" into the Password field|
+  step %|I press the sign in button|
+end
