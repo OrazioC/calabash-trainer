@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class SpacecraftContentProvider extends ContentProvider {
 
@@ -75,6 +77,7 @@ public class SpacecraftContentProvider extends ContentProvider {
 
             //TODO Parse the spacecrafts xml file
             XmlPullParserFactory pullParserFactory;
+            List<Spacecraft> spacecrafts = new ArrayList<Spacecraft>();
 
             try {
                 pullParserFactory = XmlPullParserFactory.newInstance();
@@ -85,7 +88,7 @@ public class SpacecraftContentProvider extends ContentProvider {
                 parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
                 parser.setInput(in_s, null);
 
-                parseXML(parser);
+                parseXML(parser, spacecrafts);
             } catch (XmlPullParserException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -94,8 +97,9 @@ public class SpacecraftContentProvider extends ContentProvider {
 
             //Read the info from a file
             //Populate the tables
-            db.execSQL("INSERT INTO " + SPACECRAFT_TABLE_NAME + " (name, affiliation) VALUES ('Mon Calamari cruiser', 'REBELLION')");
-            db.execSQL("INSERT INTO " + SPACECRAFT_TABLE_NAME + " (name, affiliation) VALUES ('Death star', 'EMPIRE')");
+            for (Spacecraft spacecraft: spacecrafts) {
+                db.execSQL("INSERT INTO " + SPACECRAFT_TABLE_NAME + " (name, affiliation) VALUES ('"+spacecraft.getName()+"', '"+spacecraft.getAffiliation()+"')");
+            }
         }
 
         @Override
@@ -104,15 +108,47 @@ public class SpacecraftContentProvider extends ContentProvider {
             onCreate(db);
         }
 
-        private void parseXML(XmlPullParser parser) throws XmlPullParserException,IOException
+        private void parseXML(final XmlPullParser parser, final List<Spacecraft> spacecrafts) throws XmlPullParserException,IOException
         {
-            ArrayList<MainListItem> spacecrafts = null;
+
             int eventType = parser.getEventType();
 
-            MainListItem currentSpacecraft = null;
+            Spacecraft currentSpacecraft = null;
 
             while (eventType != XmlPullParser.END_DOCUMENT) {
-                
+                switch (eventType) {
+                case XmlPullParser.START_DOCUMENT:
+                    Log.d("PARSER", "START_DOCUMENT " + parser.getName());
+                    break;
+                case XmlPullParser.START_TAG:
+                    String tagName = parser.getName();
+
+                    if (tagName.equals("spacecraft")) {
+                        currentSpacecraft = new Spacecraft();
+                    } else if (tagName.equals("name")) {
+                        currentSpacecraft.setName(parser.nextText());
+                    } else if (tagName.equals("affiliation")) {
+                        currentSpacecraft.setAffiliation(parser.nextText());
+                    }
+
+
+                    Log.d("PARSER", "START_TAG " + parser.getName());
+                    break;
+                case XmlPullParser.TEXT:
+                    Log.d("PARSER", "TEXT " + parser.getText());
+                    break;
+                case XmlPullParser.END_TAG:
+                    String endTagName = parser.getName();
+                    if (endTagName.equals("spacecraft")) {
+                        spacecrafts.add(currentSpacecraft);
+                    }
+                    Log.d("PARSER", "END_TAG " + parser.getName());
+                    break;
+                case XmlPullParser.END_DOCUMENT :
+                    Log.d("PARSER", "END_DOCUMENT " + parser.getName());
+                    break;
+                }
+                eventType = parser.next();
             }
         }
 

@@ -1,6 +1,5 @@
 package com.blinkboxmusic.android_sample_app;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -78,7 +76,7 @@ public class MainActivity extends ActionBarActivity {
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MainListItem item = (MainListItem) cursorAdapter.getItem(position);
+                Spacecraft item = (Spacecraft) cursorAdapter.getItem(position);
 
                 Intent intent = new Intent(getApplicationContext(), ShowItemActivity.class);
                 intent.putExtra(EXTRAS_KEY_ITEM_NAME_MESSAGE, item.getName());

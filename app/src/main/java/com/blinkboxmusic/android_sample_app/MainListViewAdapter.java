@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class MainListViewAdapter extends BaseAdapter{
 
-    List<MainListItem> mainList = getDataForListView();
+    List<Spacecraft> mainList = getDataForListView();
     Context context;
     enum Faction {EMPIRE, REBELLION};
 
@@ -24,22 +24,22 @@ public class MainListViewAdapter extends BaseAdapter{
         context = pContext;
     }
 
-    private List<MainListItem> getDataForListView() {
-        mainList = new ArrayList<MainListItem>();
+    private List<Spacecraft> getDataForListView() {
+        mainList = new ArrayList<Spacecraft>();
 
-        MainListItem item1 = new MainListItem();
+        Spacecraft item1 = new Spacecraft();
         item1.setName("Death Star");
         item1.setAffiliation(Faction.EMPIRE.toString());
 
-        MainListItem item2 = new MainListItem();
+        Spacecraft item2 = new Spacecraft();
         item2.setName("Mon Calamari cruiser");
         item2.setAffiliation(Faction.REBELLION.toString());
 
-        MainListItem item3 = new MainListItem();
+        Spacecraft item3 = new Spacecraft();
         item3.setName("Tantive IV");
         item3.setAffiliation(Faction.REBELLION.toString());
 
-        MainListItem item4 = new MainListItem();
+        Spacecraft item4 = new Spacecraft();
         item4.setName("Star Destroyer");
         item4.setAffiliation(Faction.EMPIRE.toString());
 
@@ -57,7 +57,7 @@ public class MainListViewAdapter extends BaseAdapter{
     }
 
     @Override
-    public MainListItem getItem(int position) {
+    public Spacecraft getItem(int position) {
         return mainList.get(position);
     }
 
