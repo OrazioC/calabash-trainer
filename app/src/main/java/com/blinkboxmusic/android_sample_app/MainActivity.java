@@ -36,23 +36,7 @@ public class MainActivity extends ActionBarActivity {
         TextView welcome_message = (TextView)findViewById(R.id.welcome_label);
         welcome_message.setText(text);
 
-
-        /**
-         *
-         */
-//        ContentValues values = new ContentValues();
-//
-//        values.put(SpacecraftContentProvider.NAME, "Death Star");
-//        values.put(SpacecraftContentProvider.AFFILIATION, MainListViewAdapter.Faction.EMPIRE.toString());
-//        Uri uri = getContentResolver().insert(SpacecraftContentProvider.CONTENT_URI, values);
-//
-//        Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_LONG).show();
-
-        // get a cursor from the ContentProvider
-        // iterate using the cursor to populate the list
-        // (in the future use cursor adapter
-
-        String URL = "content://bbm/spacecraft";
+        String URL = "content://"+SpacecraftContentProvider.PROVIDER_NAME+"/spacecraft";
         Uri spacecrafts = Uri.parse(URL);
         Cursor cursor = getContentResolver().query(spacecrafts, null, null, null, "name");
 
@@ -77,7 +61,7 @@ public class MainActivity extends ActionBarActivity {
                 Cursor cursor = ((MainListCursorAdapter) parent.getAdapter()).getCursor();
                 cursor.moveToPosition(position);
 
-                String itemName = cursor.getString(cursor.getColumnIndex(SpacecraftContentProvider.NAME));
+                String itemName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.NAME));
 
                 Intent intent = new Intent(getApplicationContext(), ShowItemActivity.class);
                 intent.putExtra(EXTRAS_KEY_ITEM_NAME_MESSAGE, itemName);

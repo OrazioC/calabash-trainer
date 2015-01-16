@@ -7,21 +7,11 @@ import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
-import android.util.Log;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class SpacecraftContentProvider extends ContentProvider {
 
@@ -30,7 +20,7 @@ public class SpacecraftContentProvider extends ContentProvider {
     static final String URL = "content://" + PROVIDER_NAME + "/spacecrafts";
     static final Uri CONTENT_URI = Uri.parse(URL);
 
-    private static HashMap<String, String> SPACECRAFT_PROJECTION_MAP;
+    private static HashMap<String, String> SPACECRAFT_PROJECTION_MAP = null;
 
     static final int SPACECRAFT = 1;
     static final int SPACECRAFT_ID = 2;
@@ -42,68 +32,7 @@ public class SpacecraftContentProvider extends ContentProvider {
         uriMatcher.addURI(PROVIDER_NAME, "spacecraft/#", SPACECRAFT_ID);
     }
 
-    // Name
-    // Affiliation
-    // Image
-    static final String _ID = "_id";
-    static final String NAME = "name";
-    static final String AFFILIATION = "affiliation";
-    static final String Image = "image";
-
-    private SQLiteDatabase db;
-    static final String DATABASE_NAME = "Bbm";
-    static final String SPACECRAFT_TABLE_NAME = "spacecraft";
-    static final int DATABASE_VERSION = 1;
-    static final String CREATE_DB_TABLE =
-            " CREATE TABLE " + SPACECRAFT_TABLE_NAME +
-            " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            " name TEXT NOT NULL, " +
-            " affiliation TEXT NOT NULL);";
-
-    private static class DatabaseHelper extends SQLiteOpenHelper {
-
-        Context context;
-
-        DatabaseHelper(Context context) {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
-            this.context = context;
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase db){
-
-            db.execSQL(CREATE_DB_TABLE);
-
-            List<Spacecraft> spacecrafts = new ArrayList<Spacecraft>();
-            XmlPullSpacecraftParserHandler parserHandler = new XmlPullSpacecraftParserHandler();
-
-            try {
-                InputStream inputStream = this.context.getAssets().open("spacecraft.xml");
-
-                spacecrafts = parserHandler.parseXML(inputStream);
-            } catch (XmlPullParserException e) {
-                Log.d("PARSER", e.getStackTrace().toString());
-            } catch (IOException e) {
-                Log.d("PARSER", e.getStackTrace().toString());
-            }
-
-            //Read the info from a file
-            //Populate the tables
-            for (Spacecraft spacecraft: spacecrafts) {
-                db.execSQL("INSERT INTO " + SPACECRAFT_TABLE_NAME + " (name, affiliation) VALUES ('"+spacecraft.getName()+"', '"+spacecraft.getAffiliation()+"')");
-            }
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            db.execSQL("DROP TABLE IF EXISTS " + SPACECRAFT_TABLE_NAME);
-            onCreate(db);
-        }
-
-
-
-    }
-
+    private SQLiteDatabase db = null;
 
     public SpacecraftContentProvider() {
     }
@@ -137,7 +66,7 @@ public class SpacecraftContentProvider extends ContentProvider {
         /**
          * Add a new spacecraft record
          */
-        long rowId = db.insert(SPACECRAFT_TABLE_NAME, "", values);
+        long rowId = db.insert(DatabaseHelper.SPACECRAFT_TABLE_NAME, "", values);
         /**
          * If record is added successfully
          */
@@ -160,23 +89,23 @@ public class SpacecraftContentProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-        qb.setTables(SPACECRAFT_TABLE_NAME);
+        qb.setTables(DatabaseHelper.SPACECRAFT_TABLE_NAME);
 
         switch (uriMatcher.match(uri)) {
             case SPACECRAFT:
                 qb.setProjectionMap(SPACECRAFT_PROJECTION_MAP);
                 break;
             case SPACECRAFT_ID:
-                qb.appendWhere( _ID + "=" + uri.getPathSegments().get(1));
+                qb.appendWhere( DatabaseHelper._ID + "=" + uri.getPathSegments().get(1));
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
-        if (sortOrder == null || sortOrder == ""){
+        if (sortOrder == null || sortOrder.equals("")){
             /**
              * By default sort on spacecraft names
              */
-            sortOrder = NAME;
+            sortOrder = DatabaseHelper.NAME;
         }
         Cursor c = qb.query(db,	projection,	selection, selectionArgs, null, null, sortOrder);
         /**
@@ -193,10 +122,10 @@ public class SpacecraftContentProvider extends ContentProvider {
 
         switch (uriMatcher.match(uri)) {
         case SPACECRAFT:
-            count = db.update(SPACECRAFT_TABLE_NAME, values, selection, selectionArgs);
+            count = db.update(DatabaseHelper.SPACECRAFT_TABLE_NAME, values, selection, selectionArgs);
             break;
         case SPACECRAFT_ID:
-            count = db.update(SPACECRAFT_TABLE_NAME, values, _ID + "= " +
+            count = db.update(DatabaseHelper.SPACECRAFT_TABLE_NAME, values, DatabaseHelper._ID + "= " +
                     uri.getPathSegments().get(1) +
                     (!TextUtils.isEmpty(selection) ? " AND (" +
                     selection + ')' : ""), selectionArgs);

@@ -43,8 +43,8 @@ public class MainListCursorAdapter extends CursorAdapter {
         ViewHolderMainListItem viewHolderMainListItem = (ViewHolderMainListItem)view.getTag();
 
         // Getting the indexes for the columns
-        int nameColumnIndex = cursor.getColumnIndexOrThrow(SpacecraftContentProvider.NAME);
-        int affiliationColumnIndex = cursor.getColumnIndexOrThrow(SpacecraftContentProvider.AFFILIATION);
+        int nameColumnIndex = cursor.getColumnIndexOrThrow(DatabaseHelper.NAME);
+        int affiliationColumnIndex = cursor.getColumnIndexOrThrow(DatabaseHelper.AFFILIATION);
 
         // Getting the values (x row x column)
         String name = cursor.getString(nameColumnIndex);
