@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,10 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
 
     public final static String EXTRAS_KEY_ITEM_NAME_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
+    private MainListCursorAdapter mCursorAdapter = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,22 +41,20 @@ public class MainActivity extends ActionBarActivity {
         TextView welcome_message = (TextView)findViewById(R.id.welcome_label);
         welcome_message.setText(text);
 
-        String URL = "content://"+SpacecraftContentProvider.PROVIDER_NAME+"/spacecraft";
-        Uri spacecrafts = Uri.parse(URL);
-        Cursor cursor = getContentResolver().query(spacecrafts, null, null, null, "name");
+        // Prepare the loader.  Either re-connect with an existing one,
+        // or start a new one.
+        // CursorLoader uses a worker thread to query a content provider and return a Cursor
+        getSupportLoaderManager().initLoader(0, null, this);
 
-        Log.d("CURSOR", String.valueOf(cursor.getCount()));
-        startManagingCursor(cursor);
-
-        final MainListCursorAdapter cursorAdapter = new MainListCursorAdapter(this,cursor,false);
-
-        // Bind the Adapter with the ListView
         // Instantiate the Adapter obj
-        //final MainListViewAdapter mainListViewAdapter = new MainListViewAdapter(getApplicationContext());
+        // The Cursor Adapter gets initialized with a null cursor
+        // When the Loader is created the onLoadFinished method is invoked
+        // the actual cursor then gets assigned to the CursorAdapter
+        mCursorAdapter = new MainListCursorAdapter(MainActivity.this, null, false);
         // Take the reference of the ListView
         ListView mainListView = (ListView)findViewById(R.id.main_list_view);
         // Bind the Adapter with ListView
-        mainListView.setAdapter(cursorAdapter);
+        mainListView.setAdapter(mCursorAdapter);
 
 
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -91,5 +94,23 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        String URL = "content://"+SpacecraftContentProvider.PROVIDER_NAME+"/spacecraft";
+        Uri spacecrafts = Uri.parse(URL);
+        //Cursor cursor = getContentResolver().query(spacecrafts, null, null, null, "name");
+        return new CursorLoader(this, spacecrafts, null, null, null, "name");
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mCursorAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mCursorAdapter.swapCursor(null);
     }
 }
