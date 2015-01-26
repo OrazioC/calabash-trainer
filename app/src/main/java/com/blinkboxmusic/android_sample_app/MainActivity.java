@@ -98,10 +98,7 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String URL = "content://"+SpacecraftContentProvider.PROVIDER_NAME+"/spacecraft";
-        Uri spacecrafts = Uri.parse(URL);
-        //Cursor cursor = getContentResolver().query(spacecrafts, null, null, null, "name");
-        return new CursorLoader(this, spacecrafts, null, null, null, "name");
+        return new CursorLoader(this, SpacecraftContentProvider.CONTENT_URI, null, null, null, "name");
     }
 
     @Override

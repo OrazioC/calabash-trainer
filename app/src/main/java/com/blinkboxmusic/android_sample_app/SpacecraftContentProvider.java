@@ -28,7 +28,7 @@ public class SpacecraftContentProvider extends ContentProvider {
     static final UriMatcher uriMatcher;
     static{
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(PROVIDER_NAME, "spacecraft", SPACECRAFT);
+        uriMatcher.addURI(PROVIDER_NAME, "spacecrafts", SPACECRAFT);
         uriMatcher.addURI(PROVIDER_NAME, "spacecraft/#", SPACECRAFT_ID);
     }
 
@@ -38,27 +38,11 @@ public class SpacecraftContentProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
-        // Implement this to handle requests to delete one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    public String getType(Uri uri) {
-        switch (uriMatcher.match(uri)){
-        /**
-         * Get all spacecraft records
-         */
-        case SPACECRAFT:
-            return "vnd.android.cursor.dir/vnd.example.spacecraft";
-        /**
-         * Get a particular spacecraft
-         */
-        case SPACECRAFT_ID:
-            return "vnd.android.cursor.item/vnd.example.spacecraft";
-        default:
-            throw new IllegalArgumentException("Unsupported URI: " + uri);
-        }
+    public boolean onCreate() {
+        Context context = getContext();
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        db = dbHelper.getWritableDatabase();
+        return (db == null)? false:true;
     }
 
     @Override
@@ -76,14 +60,6 @@ public class SpacecraftContentProvider extends ContentProvider {
             return _uri;
         }
         return null;
-    }
-
-    @Override
-    public boolean onCreate() {
-        Context context = getContext();
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
-        db = dbHelper.getWritableDatabase();
-        return (db == null)? false:true;
     }
 
     @Override
@@ -107,9 +83,9 @@ public class SpacecraftContentProvider extends ContentProvider {
              */
             sortOrder = DatabaseHelper.NAME;
         }
-        Cursor c = qb.query(db,	projection,	selection, selectionArgs, null, null, sortOrder);
+        Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, sortOrder);
         /**
-         * register to watch a content URI for changes
+         * Set Uri for cursor to respond to on notify events
          */
         c.setNotificationUri(getContext().getContentResolver(), uri);
 
@@ -134,5 +110,29 @@ public class SpacecraftContentProvider extends ContentProvider {
         }
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
+    }
+
+    @Override
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        // Implement this to handle requests to delete one or more rows.
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    public String getType(Uri uri) {
+        switch (uriMatcher.match(uri)){
+            /**
+             * Get all spacecraft records
+             */
+            case SPACECRAFT:
+                return "vnd.android.cursor.dir/vnd.example.spacecraft";
+            /**
+             * Get a particular spacecraft
+             */
+            case SPACECRAFT_ID:
+                return "vnd.android.cursor.item/vnd.example.spacecraft";
+            default:
+                throw new IllegalArgumentException("Unsupported URI: " + uri);
+        }
     }
 }
