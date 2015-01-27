@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spacecrafts>
+    <spacecraft>
+        <name>Mon Calamari cruiser</name>
+        <affiliation>REBELLION</affiliation>
+    </spacecraft>
+    <spacecraft>
+        <name>Death star</name>
+        <affiliation>EMPIRE</affiliation>
+    </spacecraft>
+</spacecrafts>

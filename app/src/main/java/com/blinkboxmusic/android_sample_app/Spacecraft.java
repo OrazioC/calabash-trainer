@@ -3,7 +3,7 @@ package com.blinkboxmusic.android_sample_app;
 /**
  * Created by orazio on 16/12/14.
  */
-public class MainListItem {
+public class Spacecraft {
 
     private String name;
     private String affiliation;

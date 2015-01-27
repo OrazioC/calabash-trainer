@@ -2,24 +2,31 @@ package com.blinkboxmusic.android_sample_app;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.net.Uri;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
 
     public final static String EXTRAS_KEY_ITEM_NAME_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
+    private MainListCursorAdapter mCursorAdapter = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,21 +41,33 @@ public class MainActivity extends ActionBarActivity {
         TextView welcome_message = (TextView)findViewById(R.id.welcome_label);
         welcome_message.setText(text);
 
-        // Bind the Adapter with the ListView
+        // Prepare the loader.  Either re-connect with an existing one,
+        // or start a new one.
+        // CursorLoader uses a worker thread to query a content provider and return a Cursor
+        getSupportLoaderManager().initLoader(0, null, this);
+
         // Instantiate the Adapter obj
-        final MainListViewAdapter mainListViewAdapter = new MainListViewAdapter(getApplicationContext(), getDataForListView());
+        // The Cursor Adapter gets initialized with a null cursor
+        // When the Loader is created the onLoadFinished method is invoked
+        // the actual cursor then gets assigned to the CursorAdapter
+        mCursorAdapter = new MainListCursorAdapter(MainActivity.this, null, false);
         // Take the reference of the ListView
         ListView mainListView = (ListView)findViewById(R.id.main_list_view);
         // Bind the Adapter with ListView
-        mainListView.setAdapter(mainListViewAdapter);
+        mainListView.setAdapter(mCursorAdapter);
+
 
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MainListItem item = mainListViewAdapter.getItem(position);
+
+                Cursor cursor = ((MainListCursorAdapter) parent.getAdapter()).getCursor();
+                cursor.moveToPosition(position);
+
+                String itemName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.NAME));
 
                 Intent intent = new Intent(getApplicationContext(), ShowItemActivity.class);
-                intent.putExtra(EXTRAS_KEY_ITEM_NAME_MESSAGE, item.getName());
+                intent.putExtra(EXTRAS_KEY_ITEM_NAME_MESSAGE, itemName);
                 startActivity(intent);
             }
         });
@@ -77,30 +96,18 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private List<MainListItem> getDataForListView() {
-        List<MainListItem> mainList = new ArrayList<MainListItem>();
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(this, SpacecraftContentProvider.CONTENT_URI, null, null, null, "name");
+    }
 
-        MainListItem item1 = new MainListItem();
-        item1.setName("Death Star");
-        item1.setAffiliation(Contants.Faction.EMPIRE.toString());
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mCursorAdapter.swapCursor(data);
+    }
 
-        MainListItem item2 = new MainListItem();
-        item2.setName("Mon Calamari cruiser");
-        item2.setAffiliation(Contants.Faction.REBELLION.toString());
-
-        MainListItem item3 = new MainListItem();
-        item3.setName("Tantive IV");
-        item3.setAffiliation(Contants.Faction.REBELLION.toString());
-
-        MainListItem item4 = new MainListItem();
-        item4.setName("Star Destroyer");
-        item4.setAffiliation(Contants.Faction.EMPIRE.toString());
-
-        mainList.add(item1);
-        mainList.add(item2);
-        mainList.add(item3);
-        mainList.add(item4);
-
-        return mainList;
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mCursorAdapter.swapCursor(null);
     }
 }

@@ -12,14 +12,15 @@ import java.util.List;
 
 /**
  * Created by orazio on 15/12/14.
+ * This class is not used anymore, but keeping it as an example
  */
 public class MainListViewAdapter extends BaseAdapter{
 
     private Context mContext;
-    private List<MainListItem> mMainList;
+    private List<Spacecraft> mMainList;
 
 
-    public MainListViewAdapter(final Context context, final List<MainListItem> mainList){
+    public MainListViewAdapter(final Context context, final List<Spacecraft> mainList){
 
         this.mContext = context;
         this.mMainList = mainList;
@@ -31,7 +32,7 @@ public class MainListViewAdapter extends BaseAdapter{
     }
 
     @Override
-    public MainListItem getItem(int position) {
+    public Spacecraft getItem(int position) {
         return mMainList.get(position);
     }
 
@@ -47,11 +48,11 @@ public class MainListViewAdapter extends BaseAdapter{
 
         // ListView recycles the views
         if (convertView==null) {
-            // inflate the layout
+            // Inflate the layout
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.main_list_item, parent, false);
 
-            // well set up the ViewHolder
+            // Set up the ViewHolder
             viewHolderMainListItem = new ViewHolderMainListItem();
             viewHolderMainListItem.textViewItem = (TextView) convertView.findViewById(R.id.item_name);
             viewHolderMainListItem.imageViewItem = (ImageView) convertView.findViewById(R.id.item_affiliation_logo);
@@ -66,11 +67,11 @@ public class MainListViewAdapter extends BaseAdapter{
 
         }
 
-        MainListItem mainListItem = mMainList.get(position);
+        Spacecraft mainListItem = mMainList.get(position);
 
         if (mainListItem != null) {
 
-            if (mainListItem.getAffiliation().equals(Contants.Faction.REBELLION.toString())) {
+            if (mainListItem.getAffiliation().equals(Constants.Faction.REBELLION.toString())) {
                 viewHolderMainListItem.imageViewItem.setImageResource(R.drawable.rebellion);
             } else {
                 viewHolderMainListItem.imageViewItem.setImageResource(R.drawable.empire);
