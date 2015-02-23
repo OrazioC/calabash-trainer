@@ -34,11 +34,16 @@ public class ShowItemActivity extends ActionBarActivity {
         setTitle(text);
 
 
+        PlaceholderFragment itemfrag = new PlaceholderFragment();
+        /*
+         * Sending data from Activity to Fragment
+         */
+        itemfrag.setArguments(bundle);
 
         setContentView(R.layout.activity_show_item);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, itemfrag)
                     .commit();
         }
     }
@@ -77,7 +82,14 @@ public class ShowItemActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
+            Spacecraft spacecraft = getArguments().getParcelable(MainActivity.EXTRAS_KEY_ITEM);
+
             View rootView = inflater.inflate(R.layout.fragment_show_item, container, false);
+
+            TextView description = (TextView) rootView.findViewById(R.id.item_description);
+            description.setText(spacecraft.getDescription());
+
             return rootView;
         }
     }
