@@ -23,7 +23,7 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-
+    public final static String EXTRAS_KEY_ITEM = "com.mycompany.myfirstapp.ITEM";
     public final static String EXTRAS_KEY_ITEM_NAME_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
     private MainListCursorAdapter mCursorAdapter = null;
 
@@ -65,9 +65,12 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
                 cursor.moveToPosition(position);
 
                 String itemName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.NAME));
-
+                Spacecraft spacecraft = new Spacecraft(itemName, "affiliation", "description", "image name");
                 Intent intent = new Intent(getApplicationContext(), ShowItemActivity.class);
-                intent.putExtra(EXTRAS_KEY_ITEM_NAME_MESSAGE, itemName);
+                Bundle b = new Bundle();
+                b.putParcelable(EXTRAS_KEY_ITEM, spacecraft);
+                //intent.putExtra(EXTRAS_KEY_ITEM_NAME_MESSAGE, itemName);
+                intent.putExtras(b);
                 startActivity(intent);
             }
         });

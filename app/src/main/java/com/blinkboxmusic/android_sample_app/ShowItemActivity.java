@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,12 +20,20 @@ public class ShowItemActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = getIntent();
-        String name = intent.getStringExtra(MainActivity.EXTRAS_KEY_ITEM_NAME_MESSAGE);
+        /*
+         * Getting the parcelable object from intent extras(bundle)
+         */
+        Bundle bundle = getIntent().getExtras();
+        Spacecraft spacecraft = bundle.getParcelable(MainActivity.EXTRAS_KEY_ITEM);
+
+        Log.d("Parcelable spacecraft: ", spacecraft.getName());
+
 
         Resources res = getResources();
-        String text = String.format(res.getString(R.string.title_activity_show_item), name);
+        String text = String.format(res.getString(R.string.title_activity_show_item), spacecraft.getName());
         setTitle(text);
+
+
 
         setContentView(R.layout.activity_show_item);
         if (savedInstanceState == null) {
