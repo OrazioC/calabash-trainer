@@ -3,9 +3,27 @@
     <spacecraft>
         <name>Mon Calamari cruiser</name>
         <affiliation>REBELLION</affiliation>
+        <description>Class	Cruiser
+            Armaments	Turbolasers
+            Ion cannons
+            Tractor beam projectors
+            Defenses	Deflector shields
+            Length	1,200-17,000 Meters (depending on the ship)</description>
+        <image></image>
     </spacecraft>
     <spacecraft>
         <name>Death star</name>
         <affiliation>EMPIRE</affiliation>
+        <description>Class	Initially Imperator, later Imperial
+            Fighters	6 TIE squadrons (72 Ships)
+            Auxiliary craft	2 Lambda-class shuttles
+            Armaments	Turbolasers
+            Ion cannons
+            Tractor beam projectors
+            Defenses	Shield generators
+            Propulsion	Solar ionization reactor
+            Length	1,600 meters (5,200 ft)
+            Width	1,015 meters (3,330 ft)</description>
+        <image></image>
     </spacecraft>
 </spacecrafts>

@@ -17,6 +17,8 @@ public class XmlPullSpacecraftParserHandler {
     static final String TAG_SPACECRAFT = "spacecraft";
     static final String TAG_NAME = "name";
     static final String TAG_AFFILIATION = "affiliation";
+    static final String TAG_DESCRIPTION = "description";
+    static final String TAG_IMAGE = "image";
 
     List<Spacecraft> spacecrafts = null;
 
@@ -52,6 +54,10 @@ public class XmlPullSpacecraftParserHandler {
                         currentSpacecraft.setName(parser.nextText());
                     } else if (tagName.equals(TAG_AFFILIATION)) {
                         currentSpacecraft.setAffiliation(parser.nextText());
+                    } else if (tagName.equals(TAG_DESCRIPTION)) {
+                        currentSpacecraft.setDescription(parser.nextText());
+                    } else if (tagName.equals(TAG_IMAGE)) {
+                        currentSpacecraft.setImageName(parser.nextText());
                     }
                     break;
                 case XmlPullParser.END_TAG:

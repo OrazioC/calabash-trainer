@@ -65,7 +65,11 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
                 cursor.moveToPosition(position);
 
                 String itemName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.NAME));
-                Spacecraft spacecraft = new Spacecraft(itemName, "affiliation", "description", "image name");
+                String itemAffiliation = cursor.getString(cursor.getColumnIndex(DatabaseHelper.AFFILIATION));
+                String itemDescription = cursor.getString(cursor.getColumnIndex(DatabaseHelper.DESCRIPTION));
+                String itemImage = cursor.getString(cursor.getColumnIndex(DatabaseHelper.IMAGE));
+
+                Spacecraft spacecraft = new Spacecraft(itemName, itemAffiliation, itemDescription, itemImage);
                 Intent intent = new Intent(getApplicationContext(), ShowItemActivity.class);
                 Bundle b = new Bundle();
                 b.putParcelable(EXTRAS_KEY_ITEM, spacecraft);

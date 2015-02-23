@@ -20,7 +20,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static final String _ID = "_id";
     static final String NAME = "name";
     static final String AFFILIATION = "affiliation";
-    static final String Image = "image";
+    static final String DESCRIPTION = "description";
+    static final String IMAGE = "image";
 
     static final String DATABASE_NAME = "Bbm";
     static final String SPACECRAFT_TABLE_NAME = "spacecraft";
@@ -29,7 +30,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " CREATE TABLE " + SPACECRAFT_TABLE_NAME +
                     " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     " name TEXT NOT NULL, " +
-                    " affiliation TEXT NOT NULL);";
+                    " affiliation TEXT NOT NULL, " +
+                    " description TEXT NOT NULL, " +
+                    " image TEXT NOT NULL);";
 
     Context context = null;
 
@@ -59,7 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //Read the info from a file
         //Populate the tables
         for (Spacecraft spacecraft: spacecrafts) {
-            db.execSQL("INSERT INTO " + SPACECRAFT_TABLE_NAME + " (name, affiliation) VALUES ('"+spacecraft.getName()+"', '"+spacecraft.getAffiliation()+"')");
+            db.execSQL("INSERT INTO " + SPACECRAFT_TABLE_NAME + " (name, affiliation, description, image) VALUES ('"+spacecraft.getName()+"', '"+spacecraft.getAffiliation()+"', '"+spacecraft.getDescription()+"', '"+spacecraft.getImageName()+"')");
         }
     }
 
