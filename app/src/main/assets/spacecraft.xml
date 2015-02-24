@@ -9,7 +9,7 @@
             Tractor beam projectors
             Defenses	Deflector shields
             Length	1,200-17,000 Meters (depending on the ship)</description>
-        <image></image>
+        <image>mccruiser</image>
     </spacecraft>
     <spacecraft>
         <name>Death star</name>
@@ -24,6 +24,6 @@
             Propulsion	Solar ionization reactor
             Length	1,600 meters (5,200 ft)
             Width	1,015 meters (3,330 ft)</description>
-        <image></image>
+        <image>deathstart</image>
     </spacecraft>
 </spacecrafts>

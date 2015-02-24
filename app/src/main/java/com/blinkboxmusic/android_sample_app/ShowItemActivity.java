@@ -2,6 +2,7 @@ package com.blinkboxmusic.android_sample_app;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -11,14 +12,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
 public class ShowItemActivity extends ActionBarActivity {
 
+    public static String PACKAGE_NAME;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        PACKAGE_NAME = this.getPackageName();
 
         /*
          * Getting the parcelable object from intent extras(bundle)
@@ -89,6 +95,12 @@ public class ShowItemActivity extends ActionBarActivity {
 
             TextView description = (TextView) rootView.findViewById(R.id.item_description);
             description.setText(spacecraft.getDescription());
+
+            ImageView image = (ImageView) rootView.findViewById(R.id.item_large_image);
+            String uri = "@drawable/" + spacecraft.getImageName();
+            int imageResource = getResources().getIdentifier(uri, null, PACKAGE_NAME);
+            Drawable res = getResources().getDrawable(imageResource);
+            image.setImageDrawable(res);
 
             return rootView;
         }

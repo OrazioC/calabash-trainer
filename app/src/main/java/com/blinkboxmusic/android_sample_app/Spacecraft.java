@@ -67,6 +67,21 @@ public class Spacecraft implements Parcelable{
         }
     };
 
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        String NEW_LINE = System.getProperty("line.separator");
+
+        result.append(this.getClass().getName() + " Object {" + NEW_LINE);
+        result.append(" Name: " + name + NEW_LINE);
+        result.append(" Affiliation: " + affiliation + NEW_LINE);
+        result.append(" Description: " + description + NEW_LINE );
+        result.append(" Image: " + imageName + NEW_LINE);
+        result.append("}");
+
+        return result.toString();
+    }
+
     public String getName() {
         return name;
     }
