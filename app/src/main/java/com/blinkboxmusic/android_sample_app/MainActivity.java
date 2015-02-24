@@ -10,6 +10,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -62,10 +63,16 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
 
                 String itemName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.NAME));
                 String itemAffiliation = cursor.getString(cursor.getColumnIndex(DatabaseHelper.AFFILIATION));
-                String itemDescription = cursor.getString(cursor.getColumnIndex(DatabaseHelper.DESCRIPTION));
+                String itemSpacecraftClass = cursor.getString(cursor.getColumnIndex(DatabaseHelper.SPACECRAFT_CLASS));
+                String itemArmament = cursor.getString(cursor.getColumnIndex(DatabaseHelper.ARMAMENT));
+                String itemDefence = cursor.getString(cursor.getColumnIndex(DatabaseHelper.DEFENCE));
+                String itemSize = cursor.getString(cursor.getColumnIndex(DatabaseHelper.SIZE));
                 String itemImage = cursor.getString(cursor.getColumnIndex(DatabaseHelper.IMAGE));
 
-                Spacecraft spacecraft = new Spacecraft(itemName, itemAffiliation, itemDescription, itemImage);
+                Spacecraft spacecraft = new Spacecraft(itemName, itemAffiliation, itemSpacecraftClass, itemArmament, itemDefence, itemSize, itemImage);
+
+                Log.d("SPACECRAFT", spacecraft.toString());
+
                 Intent intent = new Intent(getApplicationContext(), ShowItemActivity.class);
                 Bundle b = new Bundle();
                 b.putParcelable(EXTRAS_KEY_ITEM, spacecraft);

@@ -3,6 +3,8 @@ package com.blinkboxmusic.android_sample_app;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by orazio on 16/12/14.
  */
@@ -10,16 +12,22 @@ public class Spacecraft implements Parcelable{
 
     private String name;
     private String affiliation;
-    private String description;
+    private String spacecraftClass;
+    private String armaments;
+    private String defences;
+    private String size;
     private String imageName;
 
     public Spacecraft() {
     }
 
-    public Spacecraft(String name, String affiliation, String description, String imageName) {
+    public Spacecraft(String name, String affiliation, String spacecraftClass, String armaments, String defences, String size, String imageName) {
         this.name = name;
         this.affiliation = affiliation;
-        this.description = description;
+        this.spacecraftClass = spacecraftClass;
+        this.armaments = armaments;
+        this.defences = defences;
+        this.size = size;
         this.imageName = imageName;
     }
 
@@ -31,7 +39,10 @@ public class Spacecraft implements Parcelable{
     public Spacecraft(Parcel in) {
         this.name = in.readString();
         this.affiliation = in.readString();
-        this.description = in.readString();
+        this.spacecraftClass = in.readString();
+        this.armaments = in.readString();
+        this.defences = in.readString();
+        this.size = in.readString();
         this.imageName = in.readString();
     }
 
@@ -44,7 +55,10 @@ public class Spacecraft implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeString(affiliation);
-        dest.writeString(description);
+        dest.writeString(spacecraftClass);
+        dest.writeString(armaments);
+        dest.writeString(defences);
+        dest.writeString(size);
         dest.writeString(imageName);
     }
 
@@ -73,9 +87,12 @@ public class Spacecraft implements Parcelable{
         String NEW_LINE = System.getProperty("line.separator");
 
         result.append(this.getClass().getName() + " Object {" + NEW_LINE);
-        result.append(" Name: " + name + NEW_LINE);
+        result.append(" Name: ").append(name).append( NEW_LINE);
         result.append(" Affiliation: " + affiliation + NEW_LINE);
-        result.append(" Description: " + description + NEW_LINE );
+        result.append(" Class: " + spacecraftClass + NEW_LINE );
+        result.append(" Armaments: " + armaments + NEW_LINE );
+        result.append(" Defences: " + defences + NEW_LINE );
+        result.append(" Size: " + size + NEW_LINE );
         result.append(" Image: " + imageName + NEW_LINE);
         result.append("}");
 
@@ -98,12 +115,36 @@ public class Spacecraft implements Parcelable{
         this.affiliation = affiliation;
     }
 
-    public String getDescription() {
-        return description;
+    public String getSpacecraftClass() {
+        return spacecraftClass;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSpacecraftClass(String spacecraftClass) {
+        this.spacecraftClass = spacecraftClass;
+    }
+
+    public String getArmaments() {
+        return armaments;
+    }
+
+    public void setArmaments(String armaments) {
+        this.armaments = armaments;
+    }
+
+    public String getDefences() {
+        return defences;
+    }
+
+    public void setDefences(String defences) {
+        this.defences = defences;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 
     public String getImageName() {

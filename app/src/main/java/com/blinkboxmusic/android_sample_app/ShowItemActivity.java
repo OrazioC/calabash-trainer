@@ -94,7 +94,7 @@ public class ShowItemActivity extends ActionBarActivity {
             View rootView = inflater.inflate(R.layout.fragment_show_item, container, false);
 
             TextView description = (TextView) rootView.findViewById(R.id.item_description);
-            description.setText(spacecraft.getDescription());
+            description.setText(spacecraft.getSpacecraftClass());
 
             ImageView image = (ImageView) rootView.findViewById(R.id.item_large_image);
             String uri = "@drawable/" + spacecraft.getImageName() + "_large";

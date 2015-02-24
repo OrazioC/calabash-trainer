@@ -20,7 +20,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static final String _ID = "_id";
     static final String NAME = "name";
     static final String AFFILIATION = "affiliation";
-    static final String DESCRIPTION = "description";
+    static final String SPACECRAFT_CLASS = "class";
+    static final String ARMAMENT = "armament";
+    static final String DEFENCE = "defence";
+    static final String SIZE = "size";
     static final String IMAGE = "image";
 
     static final String DATABASE_NAME = "Bbm";
@@ -29,10 +32,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static final String CREATE_DB_TABLE =
                     " CREATE TABLE " + SPACECRAFT_TABLE_NAME +
                     " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    " name TEXT NOT NULL, " +
-                    " affiliation TEXT NOT NULL, " +
-                    " description TEXT NOT NULL, " +
-                    " image TEXT NOT NULL);";
+                    " " + NAME + " TEXT NOT NULL, " +
+                    " " + AFFILIATION + " TEXT NOT NULL, " +
+                    " " + SPACECRAFT_CLASS + " TEXT NOT NULL, " +
+                    " " + ARMAMENT + " TEXT NOT NULL, " +
+                    " " + DEFENCE + " TEXT NOT NULL, " +
+                    " " + SIZE + " TEXT NOT NULL, " +
+                    " " + IMAGE + " TEXT NOT NULL);";
 
     Context context = null;
 
@@ -62,7 +68,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //Read the info from a file
         //Populate the tables
         for (Spacecraft spacecraft: spacecrafts) {
-            db.execSQL("INSERT INTO " + SPACECRAFT_TABLE_NAME + " (name, affiliation, description, image) VALUES ('"+spacecraft.getName()+"', '"+spacecraft.getAffiliation()+"', '"+spacecraft.getDescription()+"', '"+spacecraft.getImageName()+"')");
+            Log.d("INSERT SPACECRAFT INTO DB", spacecraft.toString());
+            db.execSQL("INSERT INTO " + SPACECRAFT_TABLE_NAME + " ("+NAME+", "+AFFILIATION+", "+SPACECRAFT_CLASS+", "+ARMAMENT+", "+DEFENCE+", "+SIZE+", "+IMAGE+") VALUES ('"+spacecraft.getName()+"', '"+spacecraft.getAffiliation()+"', '"+spacecraft.getSpacecraftClass()+"', '"+spacecraft.getArmaments()+"', '"+spacecraft.getDefences()+"', '"+spacecraft.getSize()+"', '"+spacecraft.getImageName()+"')");
         }
     }
 
