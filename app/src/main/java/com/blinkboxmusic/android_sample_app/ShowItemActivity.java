@@ -97,7 +97,9 @@ public class ShowItemActivity extends ActionBarActivity {
             description.setText(spacecraft.getDescription());
 
             ImageView image = (ImageView) rootView.findViewById(R.id.item_large_image);
-            String uri = "@drawable/" + spacecraft.getImageName();
+            String uri = "@drawable/" + spacecraft.getImageName() + "_large";
+
+            Log.d("PACKAGE", PACKAGE_NAME);
             int imageResource = getResources().getIdentifier(uri, null, PACKAGE_NAME);
             Drawable res = getResources().getDrawable(imageResource);
             image.setImageDrawable(res);

@@ -8,9 +8,9 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:id="@+id/item_large_image"
-        android:src="@drawable/empire"
+        android:src="@drawable/mccruiser"
         android:layout_alignParentEnd="true"
         android:contentDescription="spacecraftImage"
         android:layout_alignParentStart="true" />
