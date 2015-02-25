@@ -93,8 +93,17 @@ public class ShowItemActivity extends ActionBarActivity {
 
             View rootView = inflater.inflate(R.layout.fragment_show_item, container, false);
 
-            TextView description = (TextView) rootView.findViewById(R.id.item_description);
-            description.setText(spacecraft.getSpacecraftClass());
+            TextView spacecraftClass = (TextView) rootView.findViewById(R.id.class_description);
+            spacecraftClass.setText(spacecraft.getSpacecraftClass());
+
+            TextView armament = (TextView) rootView.findViewById(R.id.armament_description);
+            armament.setText(spacecraft.getArmaments());
+
+            TextView defence = (TextView) rootView.findViewById(R.id.defence_description);
+            defence.setText(spacecraft.getDefences());
+
+            TextView size = (TextView) rootView.findViewById(R.id.size_description);
+            size.setText(spacecraft.getSize());
 
             ImageView image = (ImageView) rootView.findViewById(R.id.item_large_image);
             String uri = "@drawable/" + spacecraft.getImageName() + "_large";

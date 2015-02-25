@@ -11,6 +11,9 @@
     <string name="welcome_message">Welcome %1$s</string>
     <string name="title_activity_main">Main Page</string>
     <string name="title_activity_show_item">%1$s</string>
-    <string name="placeholder">placeholder</string>
+    <string name="class_label">Class:</string>
+    <string name="armament_label">Armaments:</string>
+    <string name="defence_label">Defences:</string>
+    <string name="size_label">Size:</string>
 
 </resources>
