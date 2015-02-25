@@ -21,7 +21,7 @@
         <name>Death star</name>
         <affiliation>EMPIRE</affiliation>
         <description>
-            <class>Initially Imperator, later Imperial</class>
+            <class>Battlestation</class>
             <armaments>
                 <armament>6 TIE squadrons (72 Ships)</armament>
                 <armament>Turbolasers</armament>
@@ -31,7 +31,7 @@
             <defences>
                 <defence>Shield generators</defence>
             </defences>
-            <size>Length 1,600 meters, Width 1,015 meters</size>
+            <size>Length 160 kilometers, Width 160 kilometers, Height 160 kilometers</size>
         </description>
         <image>deathstart</image>
     </spacecraft>

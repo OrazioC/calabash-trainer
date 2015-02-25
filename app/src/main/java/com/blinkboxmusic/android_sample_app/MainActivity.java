@@ -32,11 +32,8 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
 
         Intent intent = getIntent();
         String username = intent.getStringExtra(SignInActivity.EXTRAS_KEY_SIGN_IN_MESSAGE);
+        //TODO Use the username to personalize the app
 
-        Resources res = getResources();
-        String text = String.format(res.getString(R.string.welcome_message), username);
-        TextView welcome_message = (TextView)findViewById(R.id.welcome_label);
-        welcome_message.setText(text);
 
         // Prepare the loader.  Either re-connect with an existing one,
         // or start a new one.

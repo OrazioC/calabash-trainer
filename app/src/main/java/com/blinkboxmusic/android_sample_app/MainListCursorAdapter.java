@@ -31,6 +31,7 @@ public class MainListCursorAdapter extends CursorAdapter {
         // But we can still increase the performances avoiding calling the findViewById on each bindView invocation
         ViewHolderMainListItem viewHolderMainListItem = new ViewHolderMainListItem();
         viewHolderMainListItem.textViewItem = (TextView) view.findViewById(R.id.item_name);
+        viewHolderMainListItem.textViewItemClass = (TextView) view.findViewById(R.id.item_class);
         viewHolderMainListItem.imageViewAffiliationLogo = (ImageView) view.findViewById(R.id.item_affiliation_logo);
         viewHolderMainListItem.imageViewItem = (ImageView) view.findViewById(R.id.item_image);
 
@@ -47,17 +48,21 @@ public class MainListCursorAdapter extends CursorAdapter {
 
         // Getting the indexes for the columns
         int nameColumnIndex = cursor.getColumnIndexOrThrow(DatabaseHelper.NAME);
+        int spacecraftClassColumnIndex = cursor.getColumnIndexOrThrow(DatabaseHelper.SPACECRAFT_CLASS);
         int affiliationColumnIndex = cursor.getColumnIndexOrThrow(DatabaseHelper.AFFILIATION);
         int imageColumnIndex =  cursor.getColumnIndexOrThrow(DatabaseHelper.IMAGE);
 
         // Getting the values (x row x column)
         String name = cursor.getString(nameColumnIndex);
+        String spacecraftType = cursor.getString(spacecraftClassColumnIndex);
         String affiliation = cursor.getString(affiliationColumnIndex);
         String image = cursor.getString(imageColumnIndex);
 
         // Setting the values in the view using the view holder
         // Setting the item name
         viewHolderMainListItem.textViewItem.setText(name);
+        // Setting the item class
+        viewHolderMainListItem.textViewItemClass.setText("("+spacecraftType+")");
 
         // Dynamically choosing the image for the item
         String uri = "@drawable/" + image;
@@ -76,6 +81,7 @@ public class MainListCursorAdapter extends CursorAdapter {
 
     static class ViewHolderMainListItem {
         TextView textViewItem;
+        TextView textViewItemClass;
         ImageView imageViewAffiliationLogo;
         ImageView imageViewItem;
     }
