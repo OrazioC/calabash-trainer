@@ -11,8 +11,8 @@ Feature: Sign in feature
 
   @SI002 @login @smoke
   Scenario: SI002 - User inserts a valid username and password
-    Given I enter "bbm" into the Username field
-     And  I enter "pass" into the Password field
+    Given I am on the sign in page
+      And I enter a valid username
+      And I enter a valid password
     When  I press the sign in button
     Then  I should see the main page
-     And  I should see a "Welcome bbm" message
