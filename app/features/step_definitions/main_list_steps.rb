@@ -29,3 +29,7 @@ Then(/^I should see the item page$/) do
   @current_page = page(ItemPage).await(timeout: 5)
 end
 
+
+When(/^I select the "(.*?)" item$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
