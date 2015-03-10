@@ -1,30 +1,32 @@
-Given(/^I enter "(.*?)" into the Username field$/) do |username|
-  step %Q|I enter text "#{username}" into field with id "enter_username"|
+Given(/^I am on the sign in page$/) do
+  @current_page = page(SignInPage)
+  raise "Expected to be on the 'sign in page'" unless @current_page.current_page?
+end
+
+Given(/^I enter a valid username$/) do
+  @current_page.enter_username($valid_username)
 end
 
 
-Given(/^I enter "(.*?)" into the Password field$/) do |password|
-  enter_text("android.widget.EditText marked:'enter_password'", "#{password}")
+Given(/^I enter a valid password$/) do
+  @current_page.enter_password($valid_password)
 end
 
 
 When(/^I press the sign in button$/) do
-  touch("android.widget.Button id:'sign_in_button'")
+  @current_page.touch_login_button
 end
 
 
 Then(/^I should see the main page$/) do
-  wait_for_element_exists("android.widget.LinearLayout id:'main_layout'")
-end
-
-
-Then(/^I should see a "(.*?)" message$/) do |message|
-  wait_for_text(message)
+  @current_page = page(MainPage).await(timeout: 5)
 end
 
 
 Given(/^I have successfully signed in$/) do
-  step %|I enter "bbm" into the Username field|
-  step %|I enter "pass" into the Password field|
+  step %|I am on the sign in page|
+  step %|I enter a valid username|
+  step %|I enter a valid password|
   step %|I press the sign in button|
+  step %|I should see the main page|
 end

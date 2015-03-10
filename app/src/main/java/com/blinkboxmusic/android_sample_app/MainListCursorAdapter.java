@@ -2,6 +2,7 @@ package com.blinkboxmusic.android_sample_app;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,10 @@ public class MainListCursorAdapter extends CursorAdapter {
         // But we can still increase the performances avoiding calling the findViewById on each bindView invocation
         ViewHolderMainListItem viewHolderMainListItem = new ViewHolderMainListItem();
         viewHolderMainListItem.textViewItem = (TextView) view.findViewById(R.id.item_name);
-        viewHolderMainListItem.imageViewItem = (ImageView) view.findViewById(R.id.item_affiliation_logo);
+        viewHolderMainListItem.textViewItemClass = (TextView) view.findViewById(R.id.item_class);
+        viewHolderMainListItem.imageViewAffiliationLogo = (ImageView) view.findViewById(R.id.item_affiliation_logo);
+        viewHolderMainListItem.imageViewItem = (ImageView) view.findViewById(R.id.item_image);
+
 
         view.setTag(viewHolderMainListItem);
 
@@ -44,24 +48,41 @@ public class MainListCursorAdapter extends CursorAdapter {
 
         // Getting the indexes for the columns
         int nameColumnIndex = cursor.getColumnIndexOrThrow(DatabaseHelper.NAME);
+        int spacecraftClassColumnIndex = cursor.getColumnIndexOrThrow(DatabaseHelper.SPACECRAFT_CLASS);
         int affiliationColumnIndex = cursor.getColumnIndexOrThrow(DatabaseHelper.AFFILIATION);
+        int imageColumnIndex =  cursor.getColumnIndexOrThrow(DatabaseHelper.IMAGE);
 
         // Getting the values (x row x column)
         String name = cursor.getString(nameColumnIndex);
+        String spacecraftType = cursor.getString(spacecraftClassColumnIndex);
         String affiliation = cursor.getString(affiliationColumnIndex);
+        String image = cursor.getString(imageColumnIndex);
 
         // Setting the values in the view using the view holder
+        // Setting the item name
         viewHolderMainListItem.textViewItem.setText(name);
+        // Setting the item class
+        viewHolderMainListItem.textViewItemClass.setText("("+spacecraftType+")");
 
+        // Dynamically choosing the image for the item
+        String uri = "@drawable/" + image;
+        int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
+        Drawable res = context.getResources().getDrawable(imageResource);
+
+        viewHolderMainListItem.imageViewItem.setImageDrawable(res);
+
+        // Setting the item affiliation
         if (affiliation.equals(Constants.Faction.REBELLION.toString())) {
-            viewHolderMainListItem.imageViewItem.setImageResource(R.drawable.rebellion);
+            viewHolderMainListItem.imageViewAffiliationLogo.setImageResource(R.drawable.rebellion);
         } else {
-            viewHolderMainListItem.imageViewItem.setImageResource(R.drawable.empire);
+            viewHolderMainListItem.imageViewAffiliationLogo.setImageResource(R.drawable.empire);
         }
     }
 
     static class ViewHolderMainListItem {
         TextView textViewItem;
+        TextView textViewItemClass;
+        ImageView imageViewAffiliationLogo;
         ImageView imageViewItem;
     }
 }

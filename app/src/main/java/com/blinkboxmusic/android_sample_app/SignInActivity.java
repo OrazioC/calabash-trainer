@@ -37,6 +37,7 @@ public class SignInActivity extends Activity {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.putExtra(EXTRAS_KEY_SIGN_IN_MESSAGE, username);
             startActivity(intent);
+            finish();
         } else {
 
             int duration = Toast.LENGTH_SHORT;

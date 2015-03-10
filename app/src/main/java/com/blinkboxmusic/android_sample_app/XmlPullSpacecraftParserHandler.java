@@ -17,6 +17,11 @@ public class XmlPullSpacecraftParserHandler {
     static final String TAG_SPACECRAFT = "spacecraft";
     static final String TAG_NAME = "name";
     static final String TAG_AFFILIATION = "affiliation";
+    static final String TAG_CLASS = "class";
+    static final String TAG_ARMAMENT = "armament";
+    static final String TAG_DEFENCE = "defence";
+    static final String TAG_SIZE = "size";
+    static final String TAG_IMAGE = "image";
 
     List<Spacecraft> spacecrafts = null;
 
@@ -40,6 +45,8 @@ public class XmlPullSpacecraftParserHandler {
         int eventType = parser.getEventType();
 
         Spacecraft currentSpacecraft = null;
+        List<String> armaments = null;
+        List<String> defences = null;
 
         while (eventType != XmlPullParser.END_DOCUMENT) {
             switch (eventType) {
@@ -48,15 +55,39 @@ public class XmlPullSpacecraftParserHandler {
 
                     if (tagName.equals(TAG_SPACECRAFT)) {
                         currentSpacecraft = new Spacecraft();
+                        armaments = new ArrayList<String>();
+                        defences = new ArrayList<String>();
                     } else if (tagName.equals(TAG_NAME)) {
                         currentSpacecraft.setName(parser.nextText());
                     } else if (tagName.equals(TAG_AFFILIATION)) {
                         currentSpacecraft.setAffiliation(parser.nextText());
+                    } else if (tagName.equals(TAG_CLASS)) {
+                        currentSpacecraft.setSpacecraftClass(parser.nextText());
+                    } else if (tagName.equals(TAG_ARMAMENT)) {
+                        armaments.add(parser.nextText());
+                    } else if (tagName.equals(TAG_DEFENCE)) {
+                        defences.add(parser.nextText());
+                    } else if (tagName.equals(TAG_SIZE)) {
+                        currentSpacecraft.setSize(parser.nextText());
+                    } else if (tagName.equals(TAG_IMAGE)) {
+                        currentSpacecraft.setImageName(parser.nextText());
                     }
                     break;
                 case XmlPullParser.END_TAG:
                     String endTagName = parser.getName();
                     if (endTagName.equals(TAG_SPACECRAFT)) {
+                        StringBuilder armamentsStringBuilder = new StringBuilder();
+                        for (String armament: armaments) {
+                            armamentsStringBuilder.append(armament).append(". ");
+                        }
+                        currentSpacecraft.setArmaments(armamentsStringBuilder.toString());
+
+                        StringBuilder defencesStringBuilder = new StringBuilder();
+                        for (String defence: defences) {
+                            defencesStringBuilder.append(defence).append(". ");
+                        }
+                        currentSpacecraft.setDefences(defencesStringBuilder.toString());
+
                         spacecrafts.add(currentSpacecraft);
                     }
                     break;

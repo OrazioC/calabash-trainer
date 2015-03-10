@@ -7,15 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/welcome_label"
-        android:text="@string/welcome_message"
-        android:textSize="20sp"
-        android:textColor="@color/background_material_dark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
-
     <ListView
         android:id="@+id/main_list_view"
         android:layout_width="match_parent"

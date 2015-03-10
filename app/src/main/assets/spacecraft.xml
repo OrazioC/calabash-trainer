@@ -3,9 +3,88 @@
     <spacecraft>
         <name>Mon Calamari cruiser</name>
         <affiliation>REBELLION</affiliation>
+        <description>
+            <class>Cruiser</class>
+            <armaments>
+                <armament>Turbolasers</armament>
+                <armament>Ion cannons</armament>
+                <armament>Tractor beam projectors</armament>
+            </armaments>
+            <defences>
+                <defence>Deflector shields</defence>
+            </defences>
+            <size>length 1,200-17,000 Meters (depending on the ship)</size>
+        </description>
+        <image>mccruiser</image>
     </spacecraft>
     <spacecraft>
         <name>Death star</name>
         <affiliation>EMPIRE</affiliation>
+        <description>
+            <class>Battlestation</class>
+            <armaments>
+                <armament>6 TIE squadrons (72 Ships)</armament>
+                <armament>Turbolasers</armament>
+                <armament>Ion cannons</armament>
+                <armament>Tractor beam projectors</armament>
+            </armaments>
+            <defences>
+                <defence>Shield generators</defence>
+            </defences>
+            <size>Length 160 kilometers, Width 160 kilometers, Height 160 kilometers</size>
+        </description>
+        <image>deathstart</image>
+    </spacecraft>
+    <spacecraft>
+        <name>Tie Fighter</name>
+        <affiliation>EMPIRE</affiliation>
+        <description>
+            <class>Starfighter</class>
+            <armaments>
+                <armament>SFS L-s1 laser cannons</armament>
+            </armaments>
+            <defences>
+                <defence>None (upgrade only)</defence>
+            </defences>
+            <size>Length 6.4 meters</size>
+        </description>
+        <image>tiefighter</image>
+    </spacecraft>
+    <spacecraft>
+        <name>X wing</name>
+        <affiliation>REBELLION</affiliation>
+        <description>
+            <class>Starfighter</class>
+            <armaments>
+                <armament>Taim and Bak KX9 or IX4 laser cannons</armament>
+                <armament>Krupx MG7 proton torpedo launchers</armament>
+            </armaments>
+            <defences>
+                <defence>Chempat "Defender" deflector shield generator</defence>
+            </defences>
+            <size>Length 12.5 meters</size>
+        </description>
+        <image>xwing</image>
+    </spacecraft>
+    <spacecraft>
+        <name>Millennium Falcon</name>
+        <affiliation>REBELLION</affiliation>
+        <description>
+            <class>Light freighter</class>
+            <armaments>
+                <armament>2 modified Corellian Engineering Corporation AG-2G quad laser cannons</armament>
+                <armament>1 concealed BlasTech Ax-108 "Ground Buzzer" surface-defense blaster cannon</armament>
+                <armament>2 4-missile Arakyd ST2 concussion missile tubes</armament>
+                <armament>Landing jets modified as anti-personnel weapons</armament>
+            </armaments>
+            <defences>
+                <defence>Torplex fore deflector shield generator</defence>
+                <defence>Novaldex stasis-type shield generator (port and starboard projectors)</defence>
+                <defence>Kuat Drive Yards aft deflector shield generator</defence>
+                <defence>Nordoxicon-38 anti-concussion field generator</defence>
+            </defences>
+            <size>Length 34.37 meters, Width 25.61 meters</size>
+        </description>
+        <image>milleniumfalcon</image>
     </spacecraft>
 </spacecrafts>

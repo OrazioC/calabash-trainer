@@ -20,7 +20,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static final String _ID = "_id";
     static final String NAME = "name";
     static final String AFFILIATION = "affiliation";
-    static final String Image = "image";
+    static final String SPACECRAFT_CLASS = "class";
+    static final String ARMAMENT = "armament";
+    static final String DEFENCE = "defence";
+    static final String SIZE = "size";
+    static final String IMAGE = "image";
 
     static final String DATABASE_NAME = "Bbm";
     static final String SPACECRAFT_TABLE_NAME = "spacecraft";
@@ -28,8 +32,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static final String CREATE_DB_TABLE =
                     " CREATE TABLE " + SPACECRAFT_TABLE_NAME +
                     " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    " name TEXT NOT NULL, " +
-                    " affiliation TEXT NOT NULL);";
+                    " " + NAME + " TEXT NOT NULL, " +
+                    " " + AFFILIATION + " TEXT NOT NULL, " +
+                    " " + SPACECRAFT_CLASS + " TEXT NOT NULL, " +
+                    " " + ARMAMENT + " TEXT NOT NULL, " +
+                    " " + DEFENCE + " TEXT NOT NULL, " +
+                    " " + SIZE + " TEXT NOT NULL, " +
+                    " " + IMAGE + " TEXT NOT NULL);";
 
     Context context = null;
 
@@ -59,7 +68,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //Read the info from a file
         //Populate the tables
         for (Spacecraft spacecraft: spacecrafts) {
-            db.execSQL("INSERT INTO " + SPACECRAFT_TABLE_NAME + " (name, affiliation) VALUES ('"+spacecraft.getName()+"', '"+spacecraft.getAffiliation()+"')");
+            Log.d("INSERT SPACECRAFT INTO DB", spacecraft.toString());
+            db.execSQL("INSERT INTO " + SPACECRAFT_TABLE_NAME + " ("+NAME+", "+AFFILIATION+", "+SPACECRAFT_CLASS+", "+ARMAMENT+", "+DEFENCE+", "+SIZE+", "+IMAGE+") VALUES ('"+spacecraft.getName()+"', '"+spacecraft.getAffiliation()+"', '"+spacecraft.getSpacecraftClass()+"', '"+spacecraft.getArmaments()+"', '"+spacecraft.getDefences()+"', '"+spacecraft.getSize()+"', '"+spacecraft.getImageName()+"')");
         }
     }
 

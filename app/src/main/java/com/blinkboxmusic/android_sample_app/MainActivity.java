@@ -1,9 +1,10 @@
 package com.blinkboxmusic.android_sample_app;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.net.Uri;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -17,14 +18,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class MainActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-
-    public final static String EXTRAS_KEY_ITEM_NAME_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
+    public final static String EXTRAS_KEY_ITEM = "com.mycompany.myfirstapp.ITEM";
     private MainListCursorAdapter mCursorAdapter = null;
 
 
@@ -35,11 +32,8 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
 
         Intent intent = getIntent();
         String username = intent.getStringExtra(SignInActivity.EXTRAS_KEY_SIGN_IN_MESSAGE);
+        //TODO Use the username to personalize the app
 
-        Resources res = getResources();
-        String text = String.format(res.getString(R.string.welcome_message), username);
-        TextView welcome_message = (TextView)findViewById(R.id.welcome_label);
-        welcome_message.setText(text);
 
         // Prepare the loader.  Either re-connect with an existing one,
         // or start a new one.
@@ -65,9 +59,22 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
                 cursor.moveToPosition(position);
 
                 String itemName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.NAME));
+                String itemAffiliation = cursor.getString(cursor.getColumnIndex(DatabaseHelper.AFFILIATION));
+                String itemSpacecraftClass = cursor.getString(cursor.getColumnIndex(DatabaseHelper.SPACECRAFT_CLASS));
+                String itemArmament = cursor.getString(cursor.getColumnIndex(DatabaseHelper.ARMAMENT));
+                String itemDefence = cursor.getString(cursor.getColumnIndex(DatabaseHelper.DEFENCE));
+                String itemSize = cursor.getString(cursor.getColumnIndex(DatabaseHelper.SIZE));
+                String itemImage = cursor.getString(cursor.getColumnIndex(DatabaseHelper.IMAGE));
+
+                Spacecraft spacecraft = new Spacecraft(itemName, itemAffiliation, itemSpacecraftClass, itemArmament, itemDefence, itemSize, itemImage);
+
+                Log.d("SPACECRAFT", spacecraft.toString());
 
                 Intent intent = new Intent(getApplicationContext(), ShowItemActivity.class);
-                intent.putExtra(EXTRAS_KEY_ITEM_NAME_MESSAGE, itemName);
+                Bundle b = new Bundle();
+                b.putParcelable(EXTRAS_KEY_ITEM, spacecraft);
+                //intent.putExtra(EXTRAS_KEY_ITEM_NAME_MESSAGE, itemName);
+                intent.putExtras(b);
                 startActivity(intent);
             }
         });
@@ -109,5 +116,23 @@ public class MainActivity extends ActionBarActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mCursorAdapter.swapCursor(null);
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Closing the app")
+                .setMessage("Are you sure you want to leave the app?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 }

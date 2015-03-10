@@ -2,34 +2,54 @@ package com.blinkboxmusic.android_sample_app;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
 public class ShowItemActivity extends ActionBarActivity {
 
+    public static String PACKAGE_NAME;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = getIntent();
-        String name = intent.getStringExtra(MainActivity.EXTRAS_KEY_ITEM_NAME_MESSAGE);
+        PACKAGE_NAME = this.getPackageName();
+
+        /*
+         * Getting the parcelable object from intent extras(bundle)
+         */
+        Bundle bundle = getIntent().getExtras();
+        Spacecraft spacecraft = bundle.getParcelable(MainActivity.EXTRAS_KEY_ITEM);
+
+        Log.d("Parcelable spacecraft: ", spacecraft.getName());
+
 
         Resources res = getResources();
-        String text = String.format(res.getString(R.string.title_activity_show_item), name);
+        String text = String.format(res.getString(R.string.title_activity_show_item), spacecraft.getName());
         setTitle(text);
+
+
+        PlaceholderFragment itemfrag = new PlaceholderFragment();
+        /*
+         * Sending data from Activity to Fragment
+         */
+        itemfrag.setArguments(bundle);
 
         setContentView(R.layout.activity_show_item);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, itemfrag)
                     .commit();
         }
     }
@@ -68,7 +88,31 @@ public class ShowItemActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
+            Spacecraft spacecraft = getArguments().getParcelable(MainActivity.EXTRAS_KEY_ITEM);
+
             View rootView = inflater.inflate(R.layout.fragment_show_item, container, false);
+
+            TextView spacecraftClass = (TextView) rootView.findViewById(R.id.class_description);
+            spacecraftClass.setText(spacecraft.getSpacecraftClass());
+
+            TextView armament = (TextView) rootView.findViewById(R.id.armament_description);
+            armament.setText(spacecraft.getArmaments());
+
+            TextView defence = (TextView) rootView.findViewById(R.id.defence_description);
+            defence.setText(spacecraft.getDefences());
+
+            TextView size = (TextView) rootView.findViewById(R.id.size_description);
+            size.setText(spacecraft.getSize());
+
+            ImageView image = (ImageView) rootView.findViewById(R.id.item_large_image);
+            String uri = "@drawable/" + spacecraft.getImageName() + "_large";
+
+            Log.d("PACKAGE", PACKAGE_NAME);
+            int imageResource = getResources().getIdentifier(uri, null, PACKAGE_NAME);
+            Drawable res = getResources().getDrawable(imageResource);
+            image.setImageDrawable(res);
+
             return rootView;
         }
     }
