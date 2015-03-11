@@ -20,6 +20,8 @@ SET UP STEPS
 
    It will create a Cucumber skeleton in the current folder
 
+```
+
    features
    |_support
    | |_app_installation_hooks.rb
@@ -30,6 +32,7 @@ SET UP STEPS
    | |_calabash_steps.rb
    |_my_first.feature
 
+```
 
 2. Add the following permission to the AndroidManifest.xml
 
@@ -37,6 +40,7 @@ SET UP STEPS
 
     This is needed to interact with the Instrumentation Test Server which uses HTTP connections
 
+```
      ___________________________                   ___________________________
     |   Developer computer /    |                 |     Device / Emulator     |
     |       Build Server        |                 |                           |
@@ -59,6 +63,7 @@ SET UP STEPS
     |   ---------------------   |                 |   ---------------------   |
     |___________________________|                 |___________________________|
 
+```
 
 3. Build the test server that will be used when testing the app, run
 
