@@ -1,4 +1,4 @@
-package com.blinkboxmusic.android_sample_app;
+package com.blinkboxmusic.android_sample_app.list;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.blinkboxmusic.android_sample_app.model.Constants;
+import com.blinkboxmusic.android_sample_app.R;
+import com.blinkboxmusic.android_sample_app.db.DatabaseHelper;
 
 /**
  * Created by orazio on 07/01/15.

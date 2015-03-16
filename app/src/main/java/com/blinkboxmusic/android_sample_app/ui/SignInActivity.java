@@ -1,4 +1,4 @@
-package com.blinkboxmusic.android_sample_app;
+package com.blinkboxmusic.android_sample_app.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blinkboxmusic.android_sample_app.R;
+
 /**
  * Created by orazio on 09/12/14.
  */
 public class SignInActivity extends Activity {
 
-    public final static String EXTRAS_KEY_SIGN_IN_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
+    public final static String EXTRAS_KEY_SIGN_IN_MESSAGE = "com.blinkboxmusic.android_sample_app.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,6 +1,5 @@
-package com.blinkboxmusic.android_sample_app;
+package com.blinkboxmusic.android_sample_app.ui;
 
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
@@ -14,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.blinkboxmusic.android_sample_app.R;
+import com.blinkboxmusic.android_sample_app.model.Spacecraft;
 
 
 public class ShowItemActivity extends ActionBarActivity {

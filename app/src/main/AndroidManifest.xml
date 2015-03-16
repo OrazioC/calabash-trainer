@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.blinkboxmusic.android_sample_app.SignInActivity"
+            android:name=".ui.SignInActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,16 +20,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.blinkboxmusic.android_sample_app.MainActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/title_activity_main" >
         </activity>
         <activity
-            android:name="com.blinkboxmusic.android_sample_app.ShowItemActivity"
+            android:name=".ui.ShowItemActivity"
             android:label="@string/title_activity_show_item" >
         </activity>
 
         <provider
-            android:name=".SpacecraftContentProvider"
+            android:name=".provider.SpacecraftContentProvider"
             android:authorities="bbm"
             android:enabled="true"
             android:exported="true" >

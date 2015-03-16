@@ -1,9 +1,7 @@
-package com.blinkboxmusic.android_sample_app;
+package com.blinkboxmusic.android_sample_app.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.util.List;
 
 /**
  * Created by orazio on 16/12/14.

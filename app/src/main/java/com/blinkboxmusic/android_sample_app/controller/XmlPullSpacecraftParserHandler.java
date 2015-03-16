@@ -1,4 +1,6 @@
-package com.blinkboxmusic.android_sample_app;
+package com.blinkboxmusic.android_sample_app.controller;
+
+import com.blinkboxmusic.android_sample_app.model.Spacecraft;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

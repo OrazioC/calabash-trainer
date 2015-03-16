@@ -1,4 +1,4 @@
-package com.blinkboxmusic.android_sample_app;
+package com.blinkboxmusic.android_sample_app.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -11,19 +11,21 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.blinkboxmusic.android_sample_app.db.DatabaseHelper;
+
 import java.util.HashMap;
 
 public class SpacecraftContentProvider extends ContentProvider {
 
 
-    static final String PROVIDER_NAME = "bbm";
-    static final String URL = "content://" + PROVIDER_NAME + "/spacecrafts";
-    static final Uri CONTENT_URI = Uri.parse(URL);
+    public static final String PROVIDER_NAME = "bbm";
+    public static final String URL = "content://" + PROVIDER_NAME + "/spacecrafts";
+    public static final Uri CONTENT_URI = Uri.parse(URL);
 
     private static HashMap<String, String> SPACECRAFT_PROJECTION_MAP = null;
 
-    static final int SPACECRAFT = 1;
-    static final int SPACECRAFT_ID = 2;
+    private static final int SPACECRAFT = 1;
+    private static final int SPACECRAFT_ID = 2;
 
     static final UriMatcher uriMatcher;
     static{
