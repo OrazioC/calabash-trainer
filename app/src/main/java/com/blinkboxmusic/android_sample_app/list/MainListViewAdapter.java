@@ -1,4 +1,4 @@
-package com.blinkboxmusic.android_sample_app;
+package com.blinkboxmusic.android_sample_app.list;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.blinkboxmusic.android_sample_app.model.Constants;
+import com.blinkboxmusic.android_sample_app.R;
+import com.blinkboxmusic.android_sample_app.model.Spacecraft;
 
 import java.util.List;
 

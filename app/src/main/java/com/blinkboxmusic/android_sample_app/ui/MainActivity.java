@@ -1,9 +1,8 @@
-package com.blinkboxmusic.android_sample_app;
+package com.blinkboxmusic.android_sample_app.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -16,12 +15,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import com.blinkboxmusic.android_sample_app.R;
+import com.blinkboxmusic.android_sample_app.list.MainListCursorAdapter;
+import com.blinkboxmusic.android_sample_app.model.Spacecraft;
+import com.blinkboxmusic.android_sample_app.db.DatabaseHelper;
+import com.blinkboxmusic.android_sample_app.provider.SpacecraftContentProvider;
 
 
 public class MainActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public final static String EXTRAS_KEY_ITEM = "com.mycompany.myfirstapp.ITEM";
+    public final static String EXTRAS_KEY_ITEM = "com.blinkboxmusic.android_sample_app.ITEM";
     private MainListCursorAdapter mCursorAdapter = null;
 
 
