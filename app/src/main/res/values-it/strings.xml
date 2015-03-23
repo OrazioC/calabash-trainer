@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="lang">it</string>
+    <string name="app_name">Android-Sample-App</string>
+    <string name="enter_username_label">Identificativo</string>
+    <string name="email_hint">Inserisci il tuo identificativo</string>
+    <string name="enter_password_label">Password</string>
+    <string name="password_hint">Inserisci la tua password</string>
+    <string name="sign_in_button">Entra</string>
+    <string name="action_settings">Impostazioni</string>
+    <string name="title_activity_main">Lista delle astronavi</string>
+    <string name="title_activity_show_item">%1$s</string>
+    <string name="class_label">Classe:</string>
+    <string name="armament_label">Armamenti:</string>
+    <string name="defence_label">Difese:</string>
+    <string name="size_label">Dimensione:</string>
+
+</resources>

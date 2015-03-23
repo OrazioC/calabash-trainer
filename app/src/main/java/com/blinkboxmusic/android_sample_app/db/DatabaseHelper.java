@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.blinkboxmusic.android_sample_app.R;
 import com.blinkboxmusic.android_sample_app.model.Spacecraft;
 import com.blinkboxmusic.android_sample_app.controller.XmlPullSpacecraftParserHandler;
 
@@ -59,7 +60,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         XmlPullSpacecraftParserHandler parserHandler = new XmlPullSpacecraftParserHandler();
 
         try {
-            InputStream inputStream = this.context.getAssets().open("spacecraft.xml");
+
+            String locale = context.getString(R.string.lang);
+            InputStream inputStream = this.context.getAssets().open("spacecraft-"+ locale +".xml");
 
             spacecrafts = parserHandler.parseXML(inputStream);
         } catch (XmlPullParserException e) {

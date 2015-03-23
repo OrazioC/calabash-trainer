@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spacecrafts>
+    <spacecraft>
+        <name>Mon Calamari</name>
+        <affiliation>REBELLION</affiliation>
+        <description>
+            <class>Incrociatore</class>
+            <armaments>
+                <armament>Turbolasers</armament>
+                <armament>Cannoni a ioni</armament>
+                <armament>Proiettori di raggio traente</armament>
+            </armaments>
+            <defences>
+                <defence>Scudi deflettori</defence>
+            </defences>
+            <size>lunghezza 1,200-17,000 Metri (in base alla nave)</size>
+        </description>
+        <image>mccruiser</image>
+    </spacecraft>
+    <spacecraft>
+        <name>Morte Nera</name>
+        <affiliation>EMPIRE</affiliation>
+        <description>
+            <class>Stazione da battaglia</class>
+            <armaments>
+                <armament>6 squadroni TIE  (72 caccia)</armament>
+                <armament>Turbolasers</armament>
+                <armament>Cannoni a ioni</armament>
+                <armament>Proiettori di raggio traente</armament>
+            </armaments>
+            <defences>
+                <defence>Generatori di scudo</defence>
+            </defences>
+            <size>Lunghezza 160 km, Larghezza 160 km, Altezza 160 km</size>
+        </description>
+        <image>deathstart</image>
+    </spacecraft>
+    <spacecraft>
+        <name>Caccia Tie</name>
+        <affiliation>EMPIRE</affiliation>
+        <description>
+            <class>Caccia stellare</class>
+            <armaments>
+                <armament>SFS L-s1 cannoni laser</armament>
+            </armaments>
+            <defences>
+                <defence>Nessuno (solo con potenziamenti)</defence>
+            </defences>
+            <size>Lunghezza 6.4 metri</size>
+        </description>
+        <image>tiefighter</image>
+    </spacecraft>
+    <spacecraft>
+        <name>Ala X</name>
+        <affiliation>REBELLION</affiliation>
+        <description>
+            <class>Caccia stellare</class>
+            <armaments>
+                <armament>Cannoni laser Taim and Bak KX9 o IX4</armament>
+                <armament>Lanciatore di siluri protonici Krupx MG7</armament>
+            </armaments>
+            <defences>
+                <defence>Generatore di scudo deflettore Chempat</defence>
+            </defences>
+            <size>Lunghezza 12.5 metri</size>
+        </description>
+        <image>xwing</image>
+    </spacecraft>
+    <spacecraft>
+        <name>Millennium Falcon</name>
+        <affiliation>REBELLION</affiliation>
+        <description>
+            <class>Mercantile leggero</class>
+            <armaments>
+                <armament>2, modificati, cannoni laser quadrupli Corellian Engineering Corporation AG-2G</armament>
+                <armament>1, mascherato, cannone blaster per la difesa di superfice BlasTech Ax-108 "Ground Buzzer"</armament>
+                <armament>2 4 tubi per missili a concussione Arakyd ST2</armament>
+                <armament>Getti di atterraggio modificati come armi anti personale</armament>
+            </armaments>
+            <defences>
+                <defence>Generatore di scudo deflettore Torplex (situato a prua)</defence>
+                <defence>Generatori di scudo (tipo stasi) Novaldex (situati a babordo e tribordo)</defence>
+                <defence>Generatore di scudo deflettore Kuat Drive Yards (situato a poppa)</defence>
+                <defence>Generatore di campo anti concussione Nordoxicon-38</defence>
+            </defences>
+            <size>Lunghezza 34.37 metri, Larghezza 25.61 metri</size>
+        </description>
+        <image>milleniumfalcon</image>
+    </spacecraft>
+</spacecrafts>
