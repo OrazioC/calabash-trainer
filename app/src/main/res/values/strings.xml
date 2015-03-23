@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="lang">en</string>
     <string name="app_name">Android-Sample-App</string>
     <string name="enter_username_label">Username</string>
     <string name="email_hint">Please enter your username</string>
