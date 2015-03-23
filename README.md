@@ -1,5 +1,14 @@
-CALABASH-ANDROID
+CALABASH-TRAINER
 
+Releasing a mobile app without testing it properly divides users who demand quality working apps and what developers are able to provide.
+To solve this problem, we propose adopting a continuous delivery approach, by having a test suite of automated functional and unit tests.
+Developers mostly blame the time constraints and the high learning curve for testing technologies for not releasing a properly tested app.
+The calabash-trainer app focuses on drastically reducing the learning curve for developers and QA regarding functional tests using Calabash
+giving a simple but concise starting point.
+
+
+
+HOW TO START USING CALABASH-ANDROID FOR YOUR ANDROID APP
 
 PREREQUISITES
 
@@ -21,7 +30,6 @@ SET UP STEPS
    It will create a Cucumber skeleton in the current folder
 
 ```
-
    features
    |_support
    | |_app_installation_hooks.rb
